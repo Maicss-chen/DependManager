@@ -7,7 +7,6 @@
 
 #include <string>
 #include <vector>
-
 struct DependEntry {
     std::string name;
     bool installed;
@@ -50,6 +49,7 @@ public:
      */
     void setUserData(void *data);
 
+    static std::string exe_path;
 protected:
 
     void updateProgress(int progress, std::string log="", LOG_LEVEL logLevel=NORMAL);

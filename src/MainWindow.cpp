@@ -79,6 +79,6 @@ void MainWindow::startChooseDepend() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    disconnect(&m_stackWidget);
+    m_stackWidget.disconnect();
     QDialog::closeEvent(event);
 }
