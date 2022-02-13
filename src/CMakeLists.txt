@@ -25,7 +25,9 @@ add_executable(DependManager
         build-system/BSParser.cpp
         build-system/BSParser.h
         pages/PageBSChoose.cpp
-        pages/PageBSChoose.h build-system/XMakeBSParser.cpp build-system/XMakeBSParser.h)
+        pages/PageBSChoose.h
+        build-system/XMakeBSParser.cpp
+        build-system/XMakeBSParser.h)
 
 target_link_libraries(DependManager
         Qt5::Core

@@ -13,6 +13,9 @@
 #include <QPushButton>
 #include <QTableView>
 #include "../build-system/XMakeBSParser.h"
+#include "PageBSChoose.h"
+
+
 class PageDependChoose : public QWidget{
 Q_OBJECT
 public:

@@ -55,27 +55,29 @@ void PageDependChoose::setDependList(DependList dependList) {
         auto *item1 = new QStandardItem;
         auto *item2 = new QStandardItem;
         auto *item3 = new QStandardItem;
-
         item1->setText(QString::fromStdString(item.name));
-        if (item.installed){
-            item1->setCheckable(false);
-            item1->setCheckState(Qt::Checked);
-        } else{
-            item1->setCheckable(true);
-        }
+
         item2->setText("-");
         if(item.optional){
-            item3->setText("可选");
+            item3->setText("b.可选");
             item1->setCheckState(Qt::Unchecked);
         }
         else{
-            item3->setText("必选");
+            item3->setText("a.必选");
             item1->setCheckState(Qt::Checked);
+        }
+        if (item.installed){
+            item1->setCheckable(false);
+            item1->setCheckState(Qt::Checked);
+            item3->setText("c.已安装");
+        } else{
+            item1->setCheckable(true);
         }
         listModel.setItem(i,0,item1);
         listModel.setItem(i,1,item2);
         listModel.setItem(i,2,item3);
         i++;
     }
+    listModel.sort(2,Qt::AscendingOrder);
 
 }

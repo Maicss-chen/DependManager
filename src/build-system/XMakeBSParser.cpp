@@ -6,8 +6,9 @@
 #include <filesystem>
 #include <cjson/cJSON.h>
 #include <csignal>
-
+#include <QDebug>
 using namespace std;
+string BSParser::exe_path;
 bool XMakeBSParser::isValid() {
     filesystem::path path(this->m_path+"/xmake.lua");
     return exists(path);
@@ -16,15 +17,34 @@ bool XMakeBSParser::isValid() {
 bool XMakeBSParser::getDepends(DependList &dependList) {
 
     updateProgress(5,"开始解析",NORMAL);
-    string xmake_exe("xmake");
     updateProgress(10,"检查XMake是否存在",NORMAL);
-    if(xmake_exe.empty()) {
-        printf("cant find xmake\n");
-        updateProgress(10,"没有找到XMake",ERROR);
-        return false;
+    const char *tmp = getenv("XMAKE_EXE");
+    string xmake_exe(tmp ? tmp : "");
+    if (xmake_exe.empty()) {
+        updateProgress(10,"XMAKE_EXE环境变量不存在，将尝试直接执行xmake",WARRING);
+        if(system("xmake --version")==0){
+            xmake_exe = "xmake";
+        } else{
+            updateProgress(10,"没有找到XMAKE,请检查是否已经安装",WARRING);
+            return false;
+        }
+    } else{
+        updateProgress(10,"测试xmake是否有效");
+        if(system(string (xmake_exe + " --version").c_str())==0){
+            xmake_exe = "xmake";
+        } else{
+            updateProgress(10,"xmake命令执行无效，请检查xmake是否被正确安装",WARRING);
+            return false;
+        }
     }
-    string xmake_script_dir = string(get_current_dir_name())+"/xmake";
-    updateProgress(20,"检查info.lua是否存在",NORMAL);
+    string exe_dir = exe_path.substr(0,exe_path.find_last_of('/'));
+    string xmake_script_dir;
+    if (exe_dir.at(0)=='/'){
+        xmake_script_dir = exe_dir +"/xmake";
+    } else{
+        xmake_script_dir = string(get_current_dir_name())+"/"+exe_dir +"/xmake";
+    }
+    updateProgress(20,"检查"+xmake_script_dir+"是否存在",NORMAL);
     if(xmake_script_dir == "") {
         updateProgress(20,"没有找到info.lua",NORMAL);
         return false;
