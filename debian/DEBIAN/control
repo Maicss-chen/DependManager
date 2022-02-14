@@ -1,0 +1,6 @@
+Package: depend-manager
+Version: 0.1
+Architecture: amd64
+Depends: libqt5widgets5, libqt5gui5, libqt5core5a, libcjson1, libpackagekit-glib2-18, libglib2.0-0
+Maintainer: Maicss <maicss@126.com>
+Description: 用于在debian系发行版中处理xmake构建的项目依赖。

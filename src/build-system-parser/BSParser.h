@@ -48,10 +48,11 @@ public:
      * @param data 用户数据指针。
      */
     void setUserData(void *data);
-
+    /**
+     * 用于存储当前程序的路径
+     */
     static std::string exe_path;
 protected:
-
     void updateProgress(int progress, std::string log="", LOG_LEVEL logLevel=NORMAL);
     std::string m_path;
     ProgressCallbackFun *progressCallbackFun;

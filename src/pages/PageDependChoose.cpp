@@ -4,6 +4,7 @@
 
 #include "PageDependChoose.h"
 #include <QLayout>
+#include <QStackedWidget>
 PageDependChoose::PageDependChoose() {
     m_label1.setText("以下是该项目所需的依赖列表，请选择需要安装的依赖");
     m_chooseAll.setText("全选");
@@ -45,6 +46,10 @@ PageDependChoose::PageDependChoose() {
             listModel.item(i)->setCheckState(Qt::Checked);
         }
     });
+    connect(&m_installDepend,&QPushButton::clicked,[=](){
+        ((QStackedWidget*)parentWidget())->setCurrentIndex(((QStackedWidget*)parentWidget())->currentIndex()+1);
+    });
+
 
 }
 
@@ -55,6 +60,7 @@ void PageDependChoose::setDependList(DependList dependList) {
         auto *item1 = new QStandardItem;
         auto *item2 = new QStandardItem;
         auto *item3 = new QStandardItem;
+        item1->setData(QVariant::fromValue(item));
         item1->setText(QString::fromStdString(item.name));
 
         item2->setText("-");
@@ -80,4 +86,18 @@ void PageDependChoose::setDependList(DependList dependList) {
     }
     listModel.sort(2,Qt::AscendingOrder);
 
+}
+
+DependList PageDependChoose::getInstallList() {
+    DependList installList;
+    for (int i = 0; i < listModel.rowCount(); ++i) {
+        if (!listModel.item(i)->isCheckable())
+            continue;
+
+        auto tmp = listModel.item(i)->data().value<DependEntry>();
+        if (tmp.installed)
+            continue;
+        installList.emplace_back(tmp);
+    }
+    return installList;
 }

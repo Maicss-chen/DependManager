@@ -10,7 +10,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include "pages.h"
-#include "build-system/XMakeBSParser.h"
+#include "build-system-parser/XMakeBSParser.h"
 class MainWindow : public QDialog{
     Q_OBJECT
 public:
@@ -25,13 +25,19 @@ private:
     PageBSChoose m_pageBSChoose;
     PageWorking m_pageWorking;
     PageDependChoose m_pageDependChoose;
+    PageInstallWorking m_pageInstallWorking;
 
     void startChooseBS();
     void startParse();
     void startChooseDepend();
+    void startInstall();
+
 
     BuildSystem bs;
     DependList m_dependList;
+    DependList m_installList;
+
+    std::vector<std::string> sourceList;
 };
 
 

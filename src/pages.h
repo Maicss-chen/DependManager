@@ -6,3 +6,4 @@
 #include "pages/PageWorking.h"
 #include "pages/PageDependChoose.h"
 #include "pages/PageBSChoose.h"
+#include "pages/PageInstallWorking.h"

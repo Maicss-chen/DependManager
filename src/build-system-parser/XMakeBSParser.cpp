@@ -40,7 +40,7 @@ bool XMakeBSParser::getDepends(DependList &dependList) {
     string exe_dir = exe_path.substr(0,exe_path.find_last_of('/'));
     string xmake_script_dir;
     if (exe_dir.at(0)=='/'){
-        xmake_script_dir = exe_dir +"/xmake";
+        xmake_script_dir =  exe_dir +"/xmake";
     } else{
         xmake_script_dir = string(get_current_dir_name())+"/"+exe_dir +"/xmake";
     }

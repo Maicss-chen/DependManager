@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=依赖处理工具
+Icon=package-x-generic
+Exec=depend-manager
+StartupNotify=true
+Categories=Development;
+Terminal=false
+Comment=Xmake项目的依赖处理工具

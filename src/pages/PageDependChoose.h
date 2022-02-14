@@ -12,15 +12,17 @@
 #include <QStandardItem>
 #include <QPushButton>
 #include <QTableView>
-#include "../build-system/XMakeBSParser.h"
+#include "../build-system-parser/XMakeBSParser.h"
 #include "PageBSChoose.h"
 
+Q_DECLARE_METATYPE(DependEntry)
 
 class PageDependChoose : public QWidget{
 Q_OBJECT
 public:
     PageDependChoose();
     void setDependList(DependList dependList);
+    DependList getInstallList();
     QStandardItemModel listModel;
 private:
     QLabel m_label1;

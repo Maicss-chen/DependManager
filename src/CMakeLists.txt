@@ -10,7 +10,8 @@ find_package(Qt5 COMPONENTS
         Gui
         Widgets
         REQUIRED)
-add_subdirectory(build-system)
+add_subdirectory(build-system-parser)
+add_subdirectory(package-installer)
 
 add_executable(DependManager
         main.cpp
@@ -22,18 +23,22 @@ add_executable(DependManager
         pages/PageWorking.h
         pages/PageDependChoose.cpp
         pages/PageDependChoose.h
-        build-system/BSParser.cpp
-        build-system/BSParser.h
+        build-system-parser/BSParser.cpp
+        build-system-parser/BSParser.h
         pages/PageBSChoose.cpp
         pages/PageBSChoose.h
-        build-system/XMakeBSParser.cpp
-        build-system/XMakeBSParser.h)
+        build-system-parser/XMakeBSParser.cpp
+        build-system-parser/XMakeBSParser.h
+        pages/PageInstallWorking.cpp
+        pages/PageInstallWorking.h
+        )
 
 target_link_libraries(DependManager
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
         bsparser
+        package-installer
         )
 
 

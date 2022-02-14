@@ -20,6 +20,7 @@ public:
     void printLog(const QString& log);
     void cleanLog();
 
+
 private:
     QLabel m_label1;
     QLabel m_label2;
