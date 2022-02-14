@@ -45,7 +45,8 @@ bool XMakeBSParser::getDepends(DependList &dependList) {
         xmake_script_dir = string(get_current_dir_name())+"/"+exe_dir +"/xmake";
     }
     updateProgress(20,"检查"+xmake_script_dir+"是否存在",NORMAL);
-    if(xmake_script_dir == "") {
+    filesystem::path xsd(xmake_script_dir);
+    if(!exists(xsd)) {
         updateProgress(20,"没有找到info.lua",NORMAL);
         return false;
     }
