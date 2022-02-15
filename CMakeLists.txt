@@ -9,3 +9,4 @@ include_directories(${PackageKit_INCLUDE_DIRS})
 file(COPY info.lua DESTINATION ${PROJECT_BINARY_DIR}/src/xmake)
 
 add_subdirectory(src)
+

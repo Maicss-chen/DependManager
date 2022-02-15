@@ -41,4 +41,12 @@ target_link_libraries(DependManager
         package-installer
         )
 
-
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.4)
+    message(FATAL_ERROR "You are on an extremely old version of GCC. Please update your compiler to at least GCC 5.4, preferably latest")
+  elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11.0)
+    message(WARNING "Old Verison of GCC detected. Using Legacy C++ support")
+    target_link_libraries(${PROJECT_NAME} -lstdc++fs)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC LEGACY_CXX)
+  endif()
+endif()
