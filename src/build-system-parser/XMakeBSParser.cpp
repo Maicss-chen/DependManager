@@ -3,11 +3,23 @@
 //
 
 #include "XMakeBSParser.h"
-#include <filesystem>
+#if __GNUC__ <= 6
+    #error your compiler cannot support C++17 standard. we need at least GCC 7
+#elif (__GNUC__ > 6) && (__GNUC__ < 11)
+    #include <experimental/filesystem>
+#else
+    #include <filesystem>
+#endif
 #include <cjson/cJSON.h>
 #include <csignal>
 #include <QDebug>
+#include <unistd.h>
+
 using namespace std;
+#if (__GNUC__ > 6) && (__GNUC__ < 11)
+    namespace filesystem = std::experimental::filesystem;
+#endif
+
 string BSParser::exe_path;
 bool XMakeBSParser::isValid() {
     filesystem::path path(this->m_path+"/xmake.lua");

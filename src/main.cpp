@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <csignal>
 #include "MainWindow.h"
+#include <unistd.h>
 
 #define MAX_SIZE (PATH_MAX+1)
 
