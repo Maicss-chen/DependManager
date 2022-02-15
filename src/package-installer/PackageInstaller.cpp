@@ -146,7 +146,6 @@ void PackageInstaller::installPackages(vector<string> packages) {
         m_callback(5,"没有任何包需要安装",m_userData);
         return;
     }
-
     m_callback(5,"正在查找包",m_userData);
     values = g_new0 (gchar*, packages.size()+1);
     for (int i=0;i<packages.size();i++) {
@@ -160,14 +159,12 @@ void PackageInstaller::installPackages(vector<string> packages) {
         g_error_free (error);
     }
     array = pk_results_get_package_array (results);
-    package_ids = g_new0 (gchar *, array->len+1);
     for (int i = 0; i < array->len; i++) {
         item = (PkPackage*)g_ptr_array_index(array, i);
         if (pk_package_get_info(item) != PK_INFO_ENUM_INSTALLED){
 #ifdef _x86_64_
             if(string (pk_package_get_arch(item)) == "amd64" ||
                string (pk_package_get_arch(item)) == "x86_64"){
-                package_ids[i] = g_strdup (pk_package_get_id ((_PkPackage*)item));
                 res.emplace_back(*item);
             }
 #elif _x86_
@@ -180,21 +177,28 @@ void PackageInstaller::installPackages(vector<string> packages) {
 
         }
     }
-    g_strfreev(values);
-    g_strfreev(package_ids);
 
-    package_ids = nullptr;
+    g_strfreev(values);
+
     package_ids = g_new0 (gchar *, res.size()+1);
 
-    for (int i = 0; i < res.size(); ++i) {
+    for (int i = 0; i < res.size(); i++) {
         package_ids[i] = g_strdup(pk_package_get_id (&res[i]));
     }
 
     package_ids[res.size()]= nullptr;
+
+
+    if (res.empty()){
+        m_callback(100,"没有可以安装的软件包。",m_userData);
+        m_readCallback(true,this,m_userData);
+        return;
+    }
     //安装所有软件包
     m_callback(5,"开始安装",m_userData);
     pk_task_install_packages_async(m_task, package_ids, nullptr, _progressCallback,
                                    this, _readCallback,this);
+    g_strfreev(package_ids);
 
 }
 

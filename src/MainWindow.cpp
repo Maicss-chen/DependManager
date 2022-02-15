@@ -127,9 +127,8 @@ void MainWindow::startInstall() {
                     _this->sourceList.emplace_back(t);
                 }
             }
-            auto _this = (MainWindow*)userData;
+            _this = (MainWindow*)userData;
             if (!_this->sourceList.empty()){
-                _this->m_pageInstallWorking.printLog("开始安装");
                 me->setProgressCallbackFun([](int progress, std::string log, void* userData){
                     auto _this = (MainWindow*)userData;;
                     if (!log.empty())
@@ -139,7 +138,7 @@ void MainWindow::startInstall() {
                 me->setReadyCallbackFun([](bool success,PackageInstaller *me, void* userData){
                     auto _this = (MainWindow*)userData;
                     if (success){
-                        _this->m_pageInstallWorking.printLog("安装成功");
+                        _this->m_pageInstallWorking.printLog("任务完成");
                         _this->m_pageInstallWorking.setProgress(0,100);
                         _this->m_pageInstallWorking.setProgress(1,100);
                         _this->m_pageInstallWorking.setProgress(2,100);
